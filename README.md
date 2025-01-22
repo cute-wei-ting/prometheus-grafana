@@ -2,15 +2,20 @@
 
 ![圖片](https://devopscube.com/wp-content/uploads/2024/01/prometheus-architecture.gif)
 
-(Image source：https://devopscube.com/prometheus-architecture/)
+(Image source：https://devopscube.com/prometheus-architecture/) 
+
+<br>
 
 The **Prometheus server** is the brain of the metric-based monitoring system. The main job of the server is to collect the metrics from various targets using pull model.
+
+<br>
 
 Prometheus uses two methods to scrape metrics from the targets.
 
 **Static configs** : When the targets have a static IP or DNS endpoint, we can use those endpoints as targets.
 - **Exporters** : Exporters are like agents that run on the targets. It converts metrics from specific system to format that prometheus understands.By default these converted metrics are exposed by the exporter on /metrics path(HTTPS endpoint) of the target.
-</br> ex:
+<br>
+ex:
     ```
     scrape_configs:
     - job_name: 'node-exporter'
@@ -29,7 +34,8 @@ Prometheus uses two methods to scrape metrics from the targets.
     ```
 
 - **Pushgateway** : The batch jobs can push the metrics to the pushgateway using HTTP API. Then Pushgateway exposes those metrics on /metrics endpoint. Then prometheus scrapes those metrics from the Pushgateway.
-</br> ex:
+<br>
+ex:
     ```
     scrape_configs:
     - job_name: "pushgateway"
@@ -39,7 +45,9 @@ Prometheus uses two methods to scrape metrics from the targets.
     ```
 
 **Sevice Discovery**: In most autoscaling systems and distributed systems like Kubernetes, the target will not have a static endpoint. In this case, that target endpoints are discovered using prometheus service discovery and targets are added automatically to the prometheus configuration.
-</br> ex:
+<br>
+ex:
+<br>
 `kubernetes_sd_configs`
 ```
 scrape_configs:
@@ -113,7 +121,11 @@ prometheus.yaml :  configuration file used by Prometheus
 - You can import dashboards made by others in the [Grafana Labs dashboard](https://grafana.com/grafana/dashboards/) and
 I imported [Node Exporter Full](https://grafana.com/grafana/dashboards/1860-node-exporter-full/) dashboard like below.
 
+    ![alt text](images/image-4.png)
 
+Success!!
+
+<br>
 
 Acknowledgments
 --
