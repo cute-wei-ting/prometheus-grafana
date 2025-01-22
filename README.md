@@ -16,33 +16,35 @@ Prometheus uses two methods to scrape metrics from the targets.
 - **Exporters** : Exporters are like agents that run on the targets. It converts metrics from specific system to format that prometheus understands.By default these converted metrics are exposed by the exporter on /metrics path(HTTPS endpoint) of the target.
 <br>
 ex:
-    ```
-    scrape_configs:
-    - job_name: 'node-exporter'
-        static_configs:
-        - targets: ['node-exporter1:9100', 'node-exporter2:9100']
 
-    - job_name: 'blackbox-exporter'
-        static_configs:
-        - targets: ['blackbox-exporter1:9115', 'blackbox-exporter2:9115']
-        metrics_path: /probe
+```
+scrape_configs:
+- job_name: 'node-exporter'
+    static_configs:
+    - targets: ['node-exporter1:9100', 'node-exporter2:9100']
 
-    - job_name: 'snmp-exporter'
-        static_configs:
-        - targets: ['snmp-exporter1:9116', 'snmp-exporter2:9116']
-        metrics_path: /snmp
-    ```
+- job_name: 'blackbox-exporter'
+    static_configs:
+    - targets: ['blackbox-exporter1:9115', 'blackbox-exporter2:9115']
+    metrics_path: /probe
+
+- job_name: 'snmp-exporter'
+    static_configs:
+    - targets: ['snmp-exporter1:9116', 'snmp-exporter2:9116']
+    metrics_path: /snmp
+```
 
 - **Pushgateway** : The batch jobs can push the metrics to the pushgateway using HTTP API. Then Pushgateway exposes those metrics on /metrics endpoint. Then prometheus scrapes those metrics from the Pushgateway.
 <br>
 ex:
-    ```
-    scrape_configs:
-    - job_name: "pushgateway"
-            honor_labels: true
-            static_configs:
-            - targets: [pushgateway.monitoring.svc:9091]
-    ```
+
+```
+scrape_configs:
+- job_name: "pushgateway"
+        honor_labels: true
+        static_configs:
+        - targets: [pushgateway.monitoring.svc:9091]
+```
 
 **Sevice Discovery**: In most autoscaling systems and distributed systems like Kubernetes, the target will not have a static endpoint. In this case, that target endpoints are discovered using prometheus service discovery and targets are added automatically to the prometheus configuration.
 <br>
